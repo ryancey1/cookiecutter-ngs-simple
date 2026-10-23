@@ -1,0 +1,10 @@
+{
+  "project_name": "My NGS Analysis",
+  "author_name": "Your Name",
+  "author_email": "you@example.com",
+  "description": "Add description later",
+  "assay": "Add assay later",
+  "organism": "Add organism later",
+  "genome_build": "Add genome build later",
+  "__project_slug": "{{ cookiecutter.project_name.replace(\" \", \"_\") }}"
+}
