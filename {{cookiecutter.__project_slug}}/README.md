@@ -8,19 +8,34 @@
 
 ## Layout
 
+Files are organized by pipeline stage: `data/` holds the starting inputs and
+the analysis objects built by our own scripts; `results/` holds the output of
+standard NGS tools, one folder per step, plus final tables and figures.
+
 ```
 data/
-  raw/         raw FASTQ/BAM as received (never modified)
-  reference/   genome FASTA, annotation, indices
-  interim/     intermediate files (safe to delete)
-  processed/   final processed data
-logs/          tool and pipeline logs
+  raw/          FASTQs and sample sheets exactly as received (never modified)
+  reference/    genome FASTA, annotation GTF, aligner indices
+  interim/      temporary pipeline intermediates, e.g. trimmed FASTQs,
+                unsorted BAMs (safe to delete)
+  processed/    objects built by our scripts from pipeline outputs,
+                e.g. DESeq2/Seurat objects, normalized matrices
+logs/           tool and pipeline logs
 results/
-  qc/  alignments/  counts/  variants/  tables/  figures/
+  qc/           FastQC, MultiQC and other QC reports
+  alignments/   final sorted/deduplicated BAMs and their indices
+  counts/       count tables from featureCounts, Salmon, etc.
+  variants/     VCFs from variant callers
+  tables/       final tables for reporting (e.g. DE gene lists)
+  figures/      plots
 scripts/
-  python/      Python scripts, numbered in run order (01_, 02_, ...)
-  R/           R scripts, numbered in run order
+  python/       Python scripts, numbered in run order (01_, 02_, ...)
+  R/            R scripts, numbered in run order
 ```
+
+Data flow: `data/raw` → `data/interim` → `results/alignments` →
+`results/counts` (or `results/variants`) → scripts → `data/processed` →
+`results/tables` and `results/figures`.
 
 ## Environment (pixi)
 
